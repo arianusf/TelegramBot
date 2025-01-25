@@ -35,6 +35,27 @@ app.get("/image-to-base64", async (req, res) => {
   }
 });
 
+app.get("/new", async (req, res) => {
+  const token = req.query.token; // Get the image URL from query parameters
+
+  if (!token) {
+    return res
+      .status(400)
+      .send('Please provide a Token.');
+  }
+
+  try {
+    // Fetch the image as a buffer using Axios
+    const response = await axios.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=" + token);
+    res.json(response);
+  } catch (error) {
+    console.error("Error fetching the image:", error.message);
+    res
+      .status(500)
+      .send("Failed to fetch the image. Please check the URL and try again.");
+  }
+});
+
 // Default route
 app.get("/", (req, res) => {
   res.send(`
