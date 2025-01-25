@@ -48,7 +48,7 @@ app.get("/news", async (req, res) => {
     // Fetch the image as a buffer using Axios
     const response = await axios.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=" + token);
     // const json = response.json();
-    res.json(response);
+    res.json(response.data);
   } catch (error) {
     console.error("Error fetching the image:", error.message);
     res
