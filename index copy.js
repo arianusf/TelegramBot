@@ -39,21 +39,24 @@ app.get("/news", async (req, res) => {
   const token = req.query.token; // Get the image URL from query parameters
 
   if (!token) {
-    return res
-      .status(400)
-      .send('Please provide a Token.');
+    return res.status(400).send("Please provide a Token.");
   }
 
   try {
     // Fetch the image as a buffer using Axios
-    const response = await axios.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=" + token);
+    const response = await axios.get(
+      "https://newsapi.org/v2/top-headlines?country=us&apiKey=" + token
+    );
     // const json = response.json();
     res.json(response.data);
   } catch (error) {
     console.error("Error fetching the image:", error.message);
     res
       .status(500)
-      .send("Failed to fetch the image. Please check the URL and try again." + error.message);
+      .send(
+        "Failed to fetch the image. Please check the URL and try again." +
+          error.message
+      );
   }
 });
 
@@ -65,13 +68,11 @@ app.get("/", (req, res) => {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Image to Base64</title>
+            <title>Welcome to my bot</title>
         </head>
         <body>
-            <h1>Welcome to the Image to Base64 Converter</h1>
-            <p>Use the <code>/image-to-base64</code> endpoint with a <code>url</code> query parameter to get the Base64 of an image.</p>
-            <p>Example: <a href="/image-to-base64?url=https://cdn-icons-png.flaticon.com/512/9908/9908191.png">/image-to-base64?url=https://cdn-icons-png.flaticon.com/512/9908/9908191.png</a></p>
-        </body>
+            <h1>Welcome to my bot</h1>
+          </body>
         </html>
     `);
 });
