@@ -76,7 +76,7 @@ app.get("/tts", async (req, res) => {
 
     const response = await axios.get(url, { responseType: "arraybuffer" });
 
-    res.setHeader("Content-Type", "audio/mpeg"); // Set appropriate header
+    res.setHeader("Content-Type", "audio/mp3"); // Set appropriate header
     res.send(Buffer.from(response.data)); // Send audio as response
   } catch (error) {
     console.error("Error converting text to speech:", error);
