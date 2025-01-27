@@ -3,6 +3,8 @@ const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 const ffmpeg = require("fluent-ffmpeg");
+const tts = require("google-tts-api");
+
 const cors = require("cors");
 
 const app = express();
@@ -58,6 +60,27 @@ app.get("/convert", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: "Error fetching OGG file" });
+  }
+});
+
+app.get("/tts", async (req, res) => {
+  try {
+    const text = req.query.text || "hello"; // Get text from query param
+    const language = req.query.lang || "en"; // Get language from query param
+
+    const url = await tts.getAudioUrl(text, {
+      lang: language,
+      slow: false,
+      host: "https://translate.google.com",
+    });
+
+    const response = await axios.get(url, { responseType: "arraybuffer" });
+
+    res.setHeader("Content-Type", "audio/mpeg"); // Set appropriate header
+    res.send(Buffer.from(response.data)); // Send audio as response
+  } catch (error) {
+    console.error("Error converting text to speech:", error);
+    res.status(500).json({ error: "Failed to generate audio" });
   }
 });
 
