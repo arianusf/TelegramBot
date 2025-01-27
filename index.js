@@ -63,7 +63,7 @@ app.get("/convert", async (req, res) => {
   }
 });
 
-app.get("/tts", async (req, res) => {
+app.get("/arian", async (req, res) => {
   try {
     const text = req.query.text || "hello"; // Get text from query param
     const language = req.query.lang || "en"; // Get language from query param
